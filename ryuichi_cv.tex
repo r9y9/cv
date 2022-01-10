@@ -1,0 +1,489 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A clean template for an academic CV
+%
+% Uses tabularx to create two column entries (date and job/edu/citation).
+% Defines commands to make adding entries simpler.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, a4paper]{article}
+
+% Full Unicode support for non-ASCII characters
+\usepackage[utf8]{inputenc}
+
+% Identifying information
+\newcommand{\Title}{Curriculum Vit\ae}
+\newcommand{\FirstName}{Ryuichi}
+\newcommand{\LastName}{Yamamoto}
+\newcommand{\Initials}{R}
+\newcommand{\MyName}{\FirstName\ \LastName}
+\newcommand{\Email}{zryuichi@gmail.com}
+\newcommand{\PersonalWebsite}{r9y9.github.io}
+\newcommand{\LabWebsite}{compgeolab.org}
+\newcommand{\ORCID}{0000-0002-0720-0967}
+\newcommand{\Affiliation}{Voice Team\\LINE Corporation}
+\newcommand{\Address}{
+  Yotsuya Office/Yotsuya Tower 23rd FL.\\ 1-6-1 Yotsuya, Shinjuku-ku, Tokyo
+}
+
+% Template configuration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Disable hyphenation
+\usepackage[none]{hyphenat}
+
+% Control the font size
+\usepackage{anyfontsize}
+
+% Icon fonts (requires using xelatex or luatex)
+\usepackage[fixed]{fontawesome5}
+\usepackage{academicons}
+
+% Template variables for styling
+\newcommand{\TablePad}{\vspace{-0.4cm}}
+\newcommand{\SoftwareTitle}[1]{{\bfseries #1}}
+\newcommand{\TableTitle}[1]{{\fontsize{12pt}{0}\selectfont \itshape #1}}
+
+% For fancy and multipage tables
+\usepackage{tabularx}
+\usepackage{ltablex}
+
+% Define a new environment to place all CV entries in a 2-column table.
+% Left column are the dates, right column the entries.
+\usepackage{environ}
+\NewEnviron{EntriesTable}{
+\TablePad
+\begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}@{\hspace{0.02\textwidth}}p{0.86\textwidth}@{}}
+  \BODY
+\end{tabularx}
+}
+
+% Macros to add links and mark publications
+\newcommand{\DOI}[1]{doi:\href{https://doi.org/#1}{#1}}
+\newcommand{\DOILink}[1]{\href{https://doi.org/#1}{doi.org/#1}}
+\newcommand{\Preprint}[1]{\newline • Preprint: \faFilePdf\ \DOILink{#1}}
+\newcommand{\Youtube}[1]{\newline • Recording: \faYoutube\, \href{https://www.youtube.com/watch?v=#1}{youtube.com/watch?v=#1}}
+\newcommand{\GitHub}[1]{\newline • Code: \faGithub\ \href{https://github.com/#1}{#1}}
+\newcommand{\Role}[1]{\newline • Role: #1}
+\newcommand{\Website}[1]{\newline • Website: \href{https://#1}{#1}}
+\newcommand{\Slides}[1]{\newline • Slides: \faTv\ \href{https://#1}{#1}}
+\newcommand{\SlidesDOI}[1]{\newline • Slides: \faTv\ \DOILink{#1}}
+\newcommand{\PosterDOI}[1]{\newline • Poster: \faImage\ \DOILink{#1}}
+\newcommand{\OA}{\aiOpenAccess\enspace}
+\newcommand{\Invited}{\newline • \textbf{Invited talk}}
+
+% Macros to set the year and duration on the left column
+\newcommand{\Duration}[2]{\fontsize{10pt}{0}\selectfont #1 -- #2}
+\newcommand{\Year}[1]{\fontsize{10pt}{0}\selectfont #1}
+\newcommand{\Ongoing}{present}
+%\newcommand{\Ongoing}{$\ast$}
+\newcommand{\Future}{future}
+\newcommand{\Review}{in review}
+\newcommand{\Accepted}{accepted}
+\newcommand{\Appointment}[4]{\textbf{#1} \newline #2 \newline #3 \newline #4}
+
+% Define command to insert month name and year as date
+\usepackage{datetime}
+\newdateformat{monthyear}{\monthname[\THEMONTH], \THEYEAR}
+
+% Set the page margins
+\usepackage[a4paper,margin=1.5cm,includehead,headsep=5mm]{geometry}
+
+% To get the total page numbers (\pageref{LastPage})
+\usepackage{lastpage}
+
+% No indentation
+\setlength\parindent{0cm}
+
+% Increase the line spacing
+\renewcommand{\baselinestretch}{1.1}
+% and the spacing between rows in tables
+\renewcommand{\arraystretch}{1.5}
+
+% Remove space between items in itemize and enumerate
+\usepackage{enumitem}
+\setlist{nosep}
+
+% Use custom colors
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Set fonts. Requires compilation with xelatex
+\usepackage{fontspec}  % required to make older xelatex compile with UTF8
+
+% Configure the font style for sections
+\usepackage{sectsty}
+\sectionfont{\vspace{0.5cm}\bfseries\fontsize{12pt}{0}\selectfont\uppercase}
+\subsectionfont{\vspace{0.2cm}\mdseries\fontsize{12pt}{0}\selectfont\uppercase}
+
+% Set the spacing for sections
+%\usepackage{titlesec}
+%\titlespacing{\section}{0pt}{0cm}{0.3cm}
+%\titlespacing{\subsection}{0pt}{0.3cm}{0.3cm}
+
+% Disable number of sections. Use this instead of "section*" so that the sections still
+% appear as PDF bookmarks. Otherwise, would have to add the table of contents entries
+% manually.
+\makeatletter
+\renewcommand{\@seccntformat}[1]{}
+\makeatother
+
+% Set fancy headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\chead{
+  \fontsize{10pt}{12pt}\selectfont
+  \MyName
+  \hspace{0.2cm} -- \hspace{0.2cm}
+  \Title
+  \hspace{0.2cm} -- \hspace{0.2cm}
+  \monthyear\today
+}
+\rhead{\fontsize{10pt}{0}\selectfont \thepage/\pageref*{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+% Metadata for the PDF output and control of hyperlinks
+\usepackage[colorlinks=true]{hyperref}
+\hypersetup{
+  pdftitle={\MyName\ - \Title},
+  pdfauthor={\MyName},
+  linkcolor=blue,
+  citecolor=blue,
+  filecolor=black,
+  urlcolor=MidnightBlue
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+% No header for the first page
+\thispagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HEADER
+{\fontsize{22pt}{0}\selectfont\MyName}\\[-0.1cm]
+\rule{\textwidth}{0.2pt}
+\begin{minipage}[t]{0.595\textwidth}
+  \Affiliation
+  \\
+  \Address
+\end{minipage}
+\begin{minipage}[t]{0.405\textwidth}
+  \begin{flushright}
+  Last updated: \monthyear\today
+  \\
+    ORCID: \href{https://orcid.org/\ORCID}{\ORCID}
+    \\
+    email: \href{mailto:\Email}{\Email}
+    \\
+    Website: \href{https://\PersonalWebsite}{\PersonalWebsite}
+  \end{flushright}
+\end{minipage}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Education}
+
+\begin{EntriesTable}
+  % I'll be pursuing ph.d course  If I pass the exam
+  % \Duration{2022}{\Ongoing}  & \textbf{Ph.D}, Graduate School of Informatics \newline
+  % Nagoya University, Nagoya, Japan\newline
+  % Superviser: Prof. Tomoki TOda
+  % \\
+  \Duration{2011}{2013}  & \textbf{M.Eng}, Graduate School of Engineering \newline
+  Nagoya Institute of Technology, Nagoya, Japan\newline
+  Superviser: Prof. Kitamura Tadashi
+  \\
+  \Duration{2007}{2011}  & \textbf{B.Eng}, Department of Computer Science \newline
+  Nagoya Institute of Technology, Nagoya, Japan\newline
+  Superviser: Prof. Kitamura Tadashi
+\end{EntriesTable}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Professional experience}
+
+\begin{EntriesTable}
+  \Duration{2021}{\Ongoing}  &
+  \Appointment{Senior Research Scientist}{Voice Team}{LINE Corporation, Tokyo, Japan}
+  \\
+  \Duration{2018}{2019}  &
+  \Appointment{Research Engineer}{Clova Voice}{NAVER Corporation, Seongnam, Gyeonggi-do, Korea}
+  \\
+  \Duration{2018}{2020}  &
+  \Appointment{Research Engineer}{Voice Team}{LINE Corporation, Tokyo, Japan}
+  \\
+  \Duration{2013}{2017}  &
+  \Appointment{Software Engineer}{Computer Vision Team}{teamLab Inc., Tokyo, Japan}
+\end{EntriesTable}
+
+\section{Memberships}
+
+\begin{itemize}
+
+    \item The Institute of Electrical and Electronics Engineers, Inc. (IEEE), Member
+    \item The Acoustical Society of Japan (ASJ), Member
+
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Awards}
+
+\begin{EntriesTable}
+  \Year{2021}  &
+  IEEE Signal Processing Society (SPS) Japan Young Author Best Paper Award
+  \\
+  \Year{2013}  &
+  Best Presentation Award in the Acoustic Society of Japan (ASJ)
+  \\
+  \Year{2012}  &
+  Best Presentation Award in the Acoustic Society of Japan (ASJ), Tokai
+\end{EntriesTable}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Programming Skills}
+
+% \TablePad
+% \begin{tabularx}{\textwidth}{@{}p{0.15\textwidth} p{0.85\textwidth}@{}}
+%   Japanese & Native
+%   \\
+%   English & Intermediate
+% \end{tabularx}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Publications}
+
+% Book, Journal, Conference
+
+\subsection{Books}
+
+
+\begin{EntriesTable}
+\Year{2021}  &
+  \textbf{\MyName}, Shinnosuke Takamichi,
+  ``Text-to-speech with Python," Impress.
+  \GitHub{r9y9/ttslearn}
+\end{EntriesTable}
+
+\subsection{Presentations}
+
+\begin{EntriesTable}
+\Year{2020}  &
+  \textbf{Ryuichi Yamamoto}, ``Parallel WaveGAN: Fast and High-Quality GPU Text-to-Speech,” Main Sesson in LINE DEVELOPER DAY, Nov 2020, Online.
+  \Youtube{knzT7M6qsl0}
+  \\
+  ~ &
+  Togami Masahito, Yusuke Kida, \textbf{Ryuichi Yamamoto}, Keisuke Imoto, ``The Current and Future of Speech Technologies,” Panel Discussion in LINE DEVELOPER DAY, Nov 2020, Online.
+  \Youtube{iSPBCot6n7g}
+  \\
+  ~ &
+  Tomoki Hayashi, \textbf{Ryuichi Yamamoto}, Katsuki Inoue, Takenori Yoshimura, Kazuya Takemura, Tomoki Toda, Shinji Watanabe, ``ESPnet-TTS: A toolkit to accelerate research on end-to-end speech synthesis.,” Special session of The Acoustic Society of Japan (ASJ), Mar 2020, Online.
+  \Invited{}
+  \\
+\Year{2018}  &
+  \textbf{Ryuichi Yamamoto}, ``WaveNet: A Generative Model for Raw Audio: What I learned from developing an open-source implementation,” Invited Talk in National Institute of Information and Communications Technology (NICT), Feb 2018, Kyoto.
+  \Invited{}
+  \\
+  ~ &
+  \textbf{Ryuichi Yamamoto}, ``An attempt to reproduce WaveNet-based text-to-speech synthesis,” MACHINE LEARNING Meetup KANSAI, Jun 2018, Kyoto.
+  \\
+\Year{2016}  &
+  \textbf{Ryuichi Yamamoto}, ``The Julia C++ interface,” JuliaTokyo \#6, Sep 2016, Tokyo.
+  \\
+\Year{2015}  &
+  \textbf{Ryuichi Yamamoto}, ``Speech signal processing in Julia,” JuliaTokyo \#3, Apr 2015, Tokyo.
+\\
+\Year{2014}  &
+  \textbf{Ryuichi Yamamoto}, ``BinDeps.jl,” JuliaTokyo \#2, Sep 2014, Tokyo.
+%  \Slides{speakerdeck.com/r9y9/bindeps-dot-jl-wohuo-yong-suru}
+\end{EntriesTable}
+
+\subsection{Journals}
+
+\begin{EntriesTable}
+\Year{2013}  &
+  Eita Nakamura, Haruto Takeda, \textbf{\MyName}, Yasuyuki Saito, Shinji Sako, Shigeki Sagayama,
+  ``Score Following Handling Performances with Arbitrary Repeats and Skips and Automatic Accompaniment,"
+  \emph{Journal of Information Processing Society of Japan}, Vol. 54, No. 4, pp. 1338-1349, 2013.
+\end{EntriesTable}
+
+
+\subsection{Conference proceedings (peer-reviewed)}
+
+\begin{EntriesTable}
+  \Year{2021} &
+  \textbf{Ryuichi Yamamoto}, Eunwoo Song, Min-Jae Hwang, Jae-Min Kim ``Parallel Waveform Synthesis Based on Generative Adversarial Networks with Voicing-Aware Conditional Discriminators," \emph{Proc. International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, pp. 6039--6043, 2021.
+  \\
+  ~ &
+  Min-Jae Hwang, \textbf{Ryuichi Yamamoto}, Eunwoo Song, Jae-Min Kim, ``TTS-by-TTS: TTS-Driven Data Augmentation for Fast and High-Quality Speech Synthesis," \emph{Proc. International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, pp. 6598--6602, 2021.
+  \\
+  ~ &
+  Min-Jae Hwang, \textbf{Ryuichi Yamamoto}, Eunwoo Song, Jae-Min Kim, ``High-Fidelity Parallel WaveGAN with Multi-Band Harmonic-Plus-Noise Model," \emph{Proc. Interspeech}, pp. 2227--2231, 2021.
+  \\
+  ~ &
+  Kosuke Futamata, Byeongseon Park, \textbf{Ryuichi Yamamoto}, Kentaro Tachibana, ``Phrase Break Prediction with Bidirectional Encoder Representations in Japanese Text-to-Speech Synthesis," \emph{Proc. Interspeech}, pp. 3126--3130, 2021.
+  \\
+  ~ &
+  Eunwoo Song, \textbf{Ryuichi Yamamoto}, Min-Jae Hwang, Jin-Seob Kim, Ohsung Kwon, Jae-Min Kim, ``Improved Parallel Wavegan Vocoder with Perceptually Weighted Spectrogram Loss," \emph{Proc. Spoken Language Technology Workshop (SLT)}, pp. 470--476, 2021.
+  \\
+  \Year{2020} &
+  Eunwoo Song, Min-Jae Hwang, \textbf{Ryuichi Yamamoto}, Jin-Seob Kim, Ohsung Kwon, Jae-Min Kim, ``Neural Text-to-Speech with a Modeling-by-Generation Excitation Vocoder," \emph{Proc. Interspeech}, pp. 3570--3574, 2020.
+  \\
+  ~ &
+  Katsuki Inoue, Sunao Hara, Masanobu Abe, Tomoki Hayashi, \textbf{Ryuichi Yamamoto}, Shinji Watanabe, ``Semi-Supervised Speaker Adaptation for End-to-End Speech Synthesis with Pretrained Models," \emph{Proc. International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, pp. 7634--7638 2020.
+  \\
+  ~ &
+  Min-Jae Hwang, Eunwoo Song, \textbf{Ryuichi Yamamoto}, Frank Soong, Hong-Goo Kang, ``Improving LPCNET-Based Text-to-Speech with Linear Prediction-Structured Mixture Density Network," \emph{Proc. International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, pp. 7219--7223, 2020.
+  \\
+  ~ &
+  \textbf{Ryuichi Yamamoto}, Eunwoo Song, Jae-Min Kim, ``Parallel WaveGAN: A Fast Waveform Generation Model Based on Generative Adversarial Networks with Multi-Resolution Spectrogram," \emph{Proc. International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, pp. 6199--6203, 2020.
+  \\
+  ~ &
+  Tomoki Hayashi, \textbf{Ryuichi Yamamoto}, Katsuki Inoue, Takenori Yoshimura, Shinji Watanabe, Tomoki Toda, Kazuya Takeda, Yu Zhang, Xu Tan, ``ESPnet-TTS: Unified, Reproducible, and Integratable Open Source End-to-End Text-to-Speech Toolkit," \emph{Proc. International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, pp. 7654--7658, 2020.
+  \\
+  \Year{2019} &
+  \textbf{Ryuichi Yamamoto}, Eunwoo Song, Jae-Min Kim, ``Probability Density Distillation with Generative Adversarial Networks for High-Quality Parallel Waveform Generation," \emph{Proc. Interspeech}, pp. 699--703, 2019.
+  \\
+  ~ &
+  Shigeki Karita, Nanxin Chen, Tomoki Hayashi, Takaaki Hori, Hirofumi Inaguma, Ziyan Jiang, Masao Someki, Nelson Enrique Yalta Soplin, \textbf{Ryuichi Yamamoto}, Xiaofei Wang, Shinji Watanabe, Takenori Yoshimura, Wangyou Zhang, ``A Comparative Study on Transformer vs RNN in Speech Applications," \emph{Proc. Automatic Speech Recognition and Understanding Workshop (ASRU)}, pp. 449--456, 2019.
+  \\
+\Year{2014}  &
+  Shinji Sako, \textbf{Ryuichi Yamamoto}, Tadashi Kitamura, ``Ryry: A Real-Time Score-Following Automatic Accompaniment Playback System Capable of Real Performances with Errors, Repeats and Jumps," \emph{Proc. International Conference on Active Media Technology (ICAMT)}, pp. 134--145, 2014.
+  \\
+\Year{2013}  &
+  \textbf{Ryuichi Yamamoto}, Shinji Sako, Tadashi Kitamura, ``Robust On-line Algorithm For Real-time Audio-to-score Alignment Based on A Delayed Decision and Anticipation Framework," \emph{Proc. International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, pp. 191--195, 2013.
+  \\
+  ~ &
+  \textbf{Ryuichi Yamamoto}, Shinji Sako, Tadashi Kitamura, ``Accurate and Low Computational Audio-to-score Alignment Using Segmental CRF with An Explicit Continuous Tempo Model," \emph{Proc. of Communications and Signal Processing (NCSP)}, pp. 345--348, 2013.
+\end{EntriesTable}
+
+\subsection{Conference proceedings (non peer-reviewed)}
+
+\begin{EntriesTable}
+\Year{2013}  &
+  \textbf{Ryuichi Yamamoto}, Shinji Sako, Tadashi Kitamura, ``Ryry: Automatic Accompaniment System Capable of Polyphonic Instruments," \emph{Proc. Interaction}, 2013 (in Japanese).
+  \\
+  ~ &
+  \textbf{Ryuichi Yamamoto}, Shinji Sako, Tadashi Kitamura, ``Score Following Based on a Combined Model of Score Position and Tempo and Application to Audio-based Automatic Accompaniment," \emph{The Acoustic Society of Japan (ASJ)}, pp. 1065--1066, 2013 (in Japanese).
+  \\
+\Year{2012}  &
+  \textbf{Ryuichi Yamamoto}, Shinji Sako, Tadashi Kitamura, ``Real-time Audio to Score Alignment Using Segmental Conditional Random Fields and Linear Dynamical System," \emph{Proc of The Music Information Retrieval Evaluation eXchange (MIREX)}, 2012.
+  \\
+  ~ &
+  \textbf{Ryuichi Yamamoto}, Shinji Sako, Tadashi Kitamura, ``Audio to Score Alignment Using Semi-Markov Conditional Random Fields," \emph{The Acoustic Society of Japan (ASJ)}, pp. 935--936, 2012 (in Japanese).
+  \\
+  ~ &
+  \textbf{Ryuichi Yamamoto}, Eita Nakamura, Yasuyuki Saito, Shinji Sako, Shigeki Sagayama, ``Eurydice: Automatic Accompaniment System with Jumping Capability," \emph{Proc. Information Processing Society of Japan (IPSJ)}, MUS-96(18), pp. 1--10, 2012 (in Japanese).
+  \\
+  ~ &
+  \textbf{Ryuichi Yamamoto}, Shinji Sako, Tadashi Kitamura, ``Real-time Audio to Score Alignment using Hidden Semi-Markov Model and Linear Dynamical System," \emph{Proc. Information Processing Society of Japan (IPSJ)}, MUS-96(13), pp. 1--6, 2012 (in Japanese).
+  \\
+  ~ &
+  Eita Nakamura, \textbf{Ryuichi Yamamoto}, Shinji Sako, Yasuyuki Saito, Shigeki Sagayama, ``Modeling ornaments in polyphonic MIDI score following and its application to automatic accompaniment", \emph{Proc. The Acoustic Society of Japan (ASJ)}, pp. 929--930, 2012 (in Japanese).
+  \\
+  ~ &
+  Eita Nakamura, \textbf{Ryuichi Yamamoto}, Shinji Sako, Yasuyuki Saito, Shigeki Sagayama, ``Modeling Performance Indeterminacies for Polyphonic Midi Score Following and Its Application to Automatic Accompaniment", \emph{Proc. Information Processing Society of Japan (IPSJ)}, MUS-96(14), pp. 1--6, 2012 (in Japanese).
+  \\
+\Year{2011}  &
+  \textbf{Ryuichi Yamamoto}, Shinji Sako, Tadashi Kitamura, ``Cooperative Automatic Accompaniment System Using Predictive Models of Expression in Music Performance Based on CRFs," \emph{Proc. Information Processing Society of Japan (IPSJ)}, MUS-91(11), pp. 1--6, 2011 (in Japanese).
+\end{EntriesTable}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Open-source Software}
+
+\subsection{Libraries}
+
+\begin{EntriesTable}
+  \Duration{2021}{\Ongoing} &
+  \textbf{ttslearn}
+  \newline
+  Library for the book ``Text-to-speech with Python"
+  \Role{Creator and core developer}
+  \GitHub{r9y9/ttslearn}
+  \Website{r9y9.github.io/ttslearn/}
+  \\
+  \Duration{2020}{\Ongoing} &
+  \textbf{nnsvs}
+  \newline
+  Neural network-based singing voice synthesis library for research
+  \Role{Creator and core developer}
+  \GitHub{r9y9/nnsvs}
+  \\
+  \Duration{2017}{\Ongoing} &
+  \textbf{nnmnkwii}
+  \newline
+  Library to build speech synthesis systems designed for easy and fast prototyping
+  \Role{Creator and core developer}
+  \GitHub{r9y9/nnmnkwii}
+  \Website{r9y9.github.io/nnmnkwii/latest/}
+  \\
+  \Duration{2015}{\Ongoing} &
+  \textbf{pysptk}
+  \newline
+  A python wrapper for Speech Signal Processing Toolkit (SPTK).
+  \Role{Creator and core developer}
+  \GitHub{r9y9/pysptk}
+  \Website{pysptk.readthedocs.io/}
+  \\
+  \Duration{2015}{2019} &
+  \textbf{librosa}
+  \newline
+  Python library for audio and music analysis.
+  \Role{Contributor}
+  \GitHub{librosa/librosa}
+  \Website{librosa.org/}
+\end{EntriesTable}
+
+\subsection{Research projects}
+
+\begin{EntriesTable}
+  \Duration{2019}{\Ongoing} &
+  \textbf{ESPnet}
+  \newline
+  End-to-End Speech Processing Toolkit
+  \Role{Discussions and reviews for text-to-speech features}
+  \GitHub{espnet/espnet}
+  \Website{espnet.github.io/espnet/}
+  \\
+  \Duration{2017}{2021} &
+  \textbf{wavenet\_vocoder}
+  \newline
+  WaveNet vocoder: neural network based waveform generation models
+  \Role{Creator and core developer}
+  \GitHub{r9y9/wavenet\_vocoder}
+  \Website{r9y9.github.io/wavenet\_vocoder/}
+  \\
+  \Duration{2017}{2020} &
+  \textbf{deepvoice3\_pytorch}
+  \newline
+  PyTorch implementation of convolutional neural networks-based text-to-speech synthesis models
+  \Role{Creator and core developer}
+  \GitHub{r9y9/deepvoice3\_pytorch}
+  \Website{r9y9.github.io/deepvoice3\_pytorch/}
+  \\
+  \Duration{2017}{2020} &
+  \textbf{gantts}
+  \newline
+  PyTorch implementation of GAN-based text-to-speech synthesis and voice conversion
+  \Role{Creator and core developer}
+  \GitHub{r9y9/gantts}
+\end{EntriesTable}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Languages}
+
+\TablePad
+\begin{tabularx}{\textwidth}{@{}p{0.15\textwidth} p{0.85\textwidth}@{}}
+  Japanese & Native
+  \\
+  English & Intermediate
+  \\
+  Korean & Elementary
+\end{tabularx}
+
+
+\end{document}
