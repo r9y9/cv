@@ -1,19 +1,16 @@
 # Curriculum Vitae
 
-[![compile-pdf](https://github.com/leouieda/cv/workflows/compile-pdf/badge.svg?event=push)](https://github.com/leouieda/cv/actions)
+[![compile-pdf](https://github.com/r9y9/cv/workflows/compile-pdf/badge.svg?event=push)](https://github.com/r9y9/cv/actions)
 
 These are the Latex sources for my academic CV.
 
 **Download** the latest compiled PDF:
-[leonardo_uieda_cv.pdf](https://www.leouieda.com/cv/leonardo_uieda_cv.pdf)
+[ryuichi_cv.pdf](https://github.com/r9y9/cv/blob/gh-pages/ryuichi_cv.pdf)
+
 
 ## Template
 
-I made my own template after using `moderncv` for a while.
-I wanted a cleaner look and something that is more unique (as much as an academic
-CV can be).
-It was also a chance for me to learn some Latex templating (and procrastihack a
-little).
+This repostiory used the template from https://github.com/leouieda/cv.
 
 You're free to reuse and modify this template under the terms of the BSD
 3-clause License (see `LICENSE.txt`).
@@ -36,9 +33,7 @@ I highly recommend using the `Makefile`:
 ## Deploying
 
 A PDF is compiled automatically by GitHub Actions with every commit to the
-*main* branch and uploaded to the *gh-pages* branch. This way, the compiled
-PDF is updated and served at https://www.leouieda.com/cv/leonardo_uieda_cv.pdf
-automatically.
+*main* branch and uploaded to the *gh-pages* branch.
 
 ## License
 
