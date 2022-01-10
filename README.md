@@ -7,14 +7,6 @@ These are the Latex sources for my academic CV.
 **Download** the latest compiled PDF:
 [ryuichi_cv.pdf](https://github.com/r9y9/cv/blob/gh-pages/ryuichi_cv.pdf)
 
-
-## Template
-
-This repostiory used the template from https://github.com/leouieda/cv.
-
-You're free to reuse and modify this template under the terms of the BSD
-3-clause License (see `LICENSE.txt`).
-
 ## Building
 
 I use [Tectonic](https://tectonic-typesetting.github.io) to build the PDF from
@@ -36,6 +28,8 @@ A PDF is compiled automatically by GitHub Actions with every commit to the
 *main* branch and uploaded to the *gh-pages* branch.
 
 ## License
+
+This repostiory used the template from https://github.com/leouieda/cv.
 
 All LaTeX template source code is distributed under the
 [BSD 3-clause License](https://opensource.org/licenses/BSD-3-Clause).
