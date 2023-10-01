@@ -5,7 +5,7 @@
 These are the Latex sources for my academic CV.
 
 **Download** the latest compiled PDF:
-[ryuichi_cv.pdf](https://github.com/r9y9/cv/blob/gh-pages/ryuichi_cv.pdf)
+[ryuichi_cv.pdf](https://github.com/r9y9/cv/raw/gh-pages/ryuichi_cv.pdf)
 
 ## Building
 
